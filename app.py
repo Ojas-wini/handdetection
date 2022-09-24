@@ -45,7 +45,7 @@ class VideoProcessor:
 
         return av.VideoFrame.from_ndarray(img, format="bgr24")
 with st.sidebar:
-    option=st.selectbox("choose imaage or webcam",['image','webcam'])
+    option=st.selectbox("choose image or webcam",['image','webcam'])
 if(option=='webcam'):
     webrtc_ctx = webrtc_streamer(
         key="WYH",
