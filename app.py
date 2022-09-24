@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import av
 import mediapipe as mp
+import streamlit as st
 from streamlit_webrtc import webrtc_streamer, WebRtcMode, RTCConfiguration
 
 mp_drawing = mp.solutions.drawing_utils
@@ -43,12 +44,16 @@ class VideoProcessor:
         img = process(img)
 
         return av.VideoFrame.from_ndarray(img, format="bgr24")
-
-webrtc_ctx = webrtc_streamer(
-    key="WYH",
-    mode=WebRtcMode.SENDRECV,
-    rtc_configuration=RTC_CONFIGURATION,
-    media_stream_constraints={"video": True, "audio": False},
-    video_processor_factory=VideoProcessor,
-    async_processing=True,
-)
+with st.sidebar:
+    option=st.selectbox("choose imaage or webcam",['image','webcam'])
+if(option=='webcam'):
+    webrtc_ctx = webrtc_streamer(
+        key="WYH",
+        mode=WebRtcMode.SENDRECV,
+        rtc_configuration=RTC_CONFIGURATION,
+        media_stream_constraints={"video": True, "audio": False},
+        video_processor_factory=VideoProcessor,
+        async_processing=True,
+    )
+if option =='image':
+    image=st.file_uploader('upload_image',type='png')
